@@ -1,3 +1,4 @@
+// import store from '@/store'
 import axios from 'axios'
 const http = axios.create({
   baseURL: process.env.VUE_APP_BASE_API,
@@ -6,6 +7,11 @@ const http = axios.create({
 // 请求拦截
 http.interceptors.request.use(
   (config) => {
+    const token = localStorage.getItem('token')
+    // console.log(token)
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`
+    }
     return config
   },
   (err) => {
